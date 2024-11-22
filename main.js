@@ -24,6 +24,7 @@ camera.position.z = 5;
 const dodecahedronGeometry = new THREE.DodecahedronGeometry();
 const material = new THREE.MeshLambertMaterial({ color: '#468585', emissive: '#468585' });
 const dodecahedron = new THREE.Mesh(dodecahedronGeometry, material);
+dodecahedron.position.y = 2;
 scene.add(dodecahedron);
 
 
@@ -57,21 +58,14 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 */
 
 
-function animate() {
-    requestAnimationFrame(animate);
-    dodecahedron.rotation.x += 0.05;
-    dodecahedron.rotation.y += 0.01;
+renderer.setPixelRatio(window.devicePixelRatio);
 
-    box.rotation.x += 0.1;
-    box.rotation.y += 0.1;
 
-    renderer.render(scene, camera);
-}
-animate();
 
-// Handle window resize
-window.addEventListener('resize', () => {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize(window.innerWidth, window.innerHeight);
-});
+ renderer.render(scene, camera);
+
+//Add orbit controls
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.enableZoom = true;
